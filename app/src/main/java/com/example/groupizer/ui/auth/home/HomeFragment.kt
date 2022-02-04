@@ -1,4 +1,4 @@
-package com.example.groupizer.ui.home
+package com.example.groupizer.ui.auth.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

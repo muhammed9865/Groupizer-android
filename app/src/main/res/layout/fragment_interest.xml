@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.register.InterestFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="interestFragment"
+            type="com.example.groupizer.ui.auth.register.InterestFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".ui.auth.register.InterestFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/header_3_margin_start"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:fontFamily="@font/sego_bold"
+            android:text="@string/choose_your_preferences"
+            android:textColor="@color/bright_blue"
+            android:textSize="@dimen/header_3_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/interests_sub_header"
+            android:textSize="@dimen/sub_header_3_text_size"
+            android:layout_marginStart="3dp"
+            android:alpha="0.7"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/interests_rv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/circles_list_height"
+            android:layout_marginTop="@dimen/circles_list_margin_top"
+            android:layout_marginEnd="@dimen/circles_list_padding"
+            android:layout_marginStart="@dimen/circles_list_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/primary_button"
+            android:layout_marginTop="@dimen/finish_btn_margin_top"
+            android:text="@string/finish"
+            app:cornerRadius="@dimen/button_radius"
+            android:onClick="@{() -> interestFragment.goToDashboard()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/interests_rv" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,7 +6,7 @@
     <dimen name="button_width">167dp</dimen>
     <dimen name="button_height">60dp</dimen>
     <dimen name="button_text_size">23sp</dimen>
-    <dimen name="header_margin_top">94dp</dimen>
+    <dimen name="header_margin_top">75dp</dimen>
     <dimen name="header_margin_start">45dp</dimen>
     <dimen name="home_login_button_margin_top">55dp</dimen>
     <dimen name="button_padding">10dp</dimen>
@@ -21,5 +21,21 @@
     <dimen name="edittext_height">49dp</dimen>
     <dimen name="edittext_radius">29dp</dimen>
     <dimen name="edittext_margin_top">11dp</dimen>
+
+    <!-- Interests Screen dimensions -->
+    <dimen name="choice_circle_width">105dp</dimen>
+    <dimen name="choice_circle_height">40dp</dimen>
+    <dimen name="choice_circle_margin_end">17dp</dimen>
+    <dimen name="circles_list_margin_top">35dp</dimen>
+    <dimen name="circles_list_padding">9dp</dimen>
+    <dimen name="circles_list_height">209dp</dimen>
+    <dimen name="header_3_text_size">27sp</dimen>
+    <dimen name="header_3_margin_start">11dp</dimen>
+    <dimen name="sub_header_3_text_size">13sp</dimen>
+    <dimen name="finish_btn_margin_top">28dp</dimen>
+    <dimen name="choice_circle_radius">17dp</dimen>
+    <dimen name="choice_text_size">18sp</dimen>
+    <dimen name="choice_circle_margin_bottom">28dp</dimen>
+
 
 </resources>

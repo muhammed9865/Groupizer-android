@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.groupizer"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -60,4 +60,15 @@ dependencies {
     // Fragments and Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1"
+
 }
