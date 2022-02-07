@@ -12,22 +12,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentRegisterBinding
-import com.example.groupizer.pojo.repository.GroupizerRepository
+import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.ui.*
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModel
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModelFactory
-import com.example.groupizer.ui.hideKeyboard
-import com.example.groupizer.ui.hideProgress
-import com.example.groupizer.ui.showProgress
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by activityViewModels {
-        RegisterViewModelFactory(GroupizerRepository.getInstance())
+        RegisterViewModelFactory(AuthRepository.getInstance())
     }
 
     override fun onCreateView(
@@ -55,12 +53,21 @@ class RegisterFragment : Fragment() {
         hideKeyboard(binding.root)
         showProgress(binding.registeringProgressbar, binding.registerNextBtn)
         CoroutineScope(Dispatchers.Main).launch {
-            viewModel.register()?.let { user ->
-                viewModel.setToken(user.token)
-                Log.d(TAG, "goToInterests: ${user.email} ${user.name} ${user.password}")
-                findNavController().navigate(R.id.action_registerFragment_to_interestFragment)
-            } ?: Snackbar.make(binding.root, "Incorrect credentials", Snackbar.LENGTH_LONG).show()
-            hideProgress(binding.registeringProgressbar, binding.registerNextBtn)
+
+            try {
+                viewModel.register()?.let { user ->
+                    viewModel.setToken(user.token)
+                    saveId(user.id!!)
+                    Log.d(TAG, "goToInterests: ${user.email} ${user.name} ${user.password}")
+                    findNavController().navigate(R.id.action_registerFragment_to_interestFragment)
+                } ?: showError(binding.root, "Email or password are incorrect")
+                hideProgress(binding.registeringProgressbar, binding.registerNextBtn)
+            }catch (e: HttpException) {
+                showError(binding.root, "Email is already in use")
+                hideProgress(binding.registeringProgressbar, binding.registerNextBtn)
+                e.printStackTrace()
+            }
+
     }
 
 

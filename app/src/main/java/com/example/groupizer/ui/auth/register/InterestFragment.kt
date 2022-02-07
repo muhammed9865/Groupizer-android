@@ -7,28 +7,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentInterestBinding
-import com.example.groupizer.pojo.model.LoginForm
-import com.example.groupizer.pojo.repository.GroupizerRepository
+import com.example.groupizer.pojo.repository.AuthRepository
 import com.example.groupizer.ui.auth.register.adapter.InterestCheck
 import com.example.groupizer.ui.auth.register.adapter.InterestsAdapter
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModel
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModelFactory
 import com.example.groupizer.ui.dashboard.DashboardActivity
+import com.example.groupizer.ui.saveId
+import com.example.groupizer.ui.showError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 
 class InterestFragment : Fragment() {
 
     private lateinit var binding: FragmentInterestBinding
     private val viewModel: RegisterViewModel by activityViewModels {
-        RegisterViewModelFactory(GroupizerRepository.getInstance())
+        RegisterViewModelFactory(AuthRepository.getInstance())
     }
 
     override fun onCreateView(
@@ -68,6 +71,8 @@ class InterestFragment : Fragment() {
                 }
             }catch (e: HttpException) {
                 Log.d(TAG, "prepareRvAdapter: ${e.response()}")
+            }catch (e: SocketTimeoutException) {
+                showError(binding.root, "No internet connection")
             }
             
 
@@ -84,19 +89,26 @@ class InterestFragment : Fragment() {
 
     fun goToDashboard() {
         CoroutineScope(Dispatchers.Main).launch {
-            viewModel.sendSelectedInterests()?.let { interests ->
+            try {
+                viewModel.sendSelectedInterests()?.let { interests ->
 
-                repeat(interests.size) { i ->
-                    Log.d(TAG, "goToDashboard: ${interests[i].title}")
+                    repeat(interests.size) { i ->
+                        Log.d(TAG, "goToDashboard: ${interests[i].title}")
+                    }
+
+                    val intent = Intent(requireActivity(), DashboardActivity::class.java)
+                    intent.putExtra(
+                        getString(R.string.current_user), viewModel.getToken())
+                    startActivity(intent)
+                    requireActivity().finish()
                 }
-
-                val intent = Intent(requireActivity(), DashboardActivity::class.java)
-                intent.putExtra(
-                    getString(R.string.current_user),
-                    LoginForm(viewModel.getEmail(), viewModel.getPassword())
-                )
-                startActivity(intent)
+            }catch (e: HttpException) {
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+            }catch (e: SocketTimeoutException) {
+                showError(binding.root, "No internet connection")
             }
+
+
         }
 
     }

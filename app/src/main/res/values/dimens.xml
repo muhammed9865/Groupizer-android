@@ -36,6 +36,44 @@
     <dimen name="choice_circle_radius">17dp</dimen>
     <dimen name="choice_text_size">18sp</dimen>
     <dimen name="choice_circle_margin_bottom">28dp</dimen>
+    
+    <!-- Groups Screen dimension -->
+    <dimen name="card_margin_end">9dp</dimen>
+    <dimen name="card_width">200dp</dimen>
+    <dimen name="card_height">100dp</dimen>
+    <dimen name="others_rv_margin_bottom">21dp</dimen>
+    <dimen name="card_view_button_text_size">15sp</dimen>
+    <dimen name="card_view_group_name_text_size">25sp</dimen>
+    <dimen name="card_view_group_name_margin_start">13dp</dimen>
+    <dimen name="card_view_group_name_margin_bottom">7dp</dimen>
+    <dimen name="card_view_view_width">35dp</dimen>
+    <dimen name="card_view_view_height">17dp</dimen>
+
+
+
+    <dimen name="group_card_height">130dp</dimen>
+    <dimen name="group_card_group_name_size">22sp</dimen>
+    <dimen name="group_owner_size">16sp</dimen>
+    <dimen name="group_message_box_width">56dp</dimen>
+    <dimen name="group_message_box_height">34dp</dimen>
+    <dimen name="group_card_radius">20dp</dimen>
+    <dimen name="group_card_margin_bottom">18dp</dimen>
+
+    <!-- Explore Screen dimensions -->
+    <dimen name="ad_card_height">178dp</dimen>
+    <dimen name="ad_card_width">348dp</dimen>
+    <dimen name="ad_name_size">30sp</dimen>
+    <dimen name="ad_name_margin_start">8dp</dimen>
+    <dimen name="ad_name_image_size">32dp</dimen>
+    <dimen name="ad_owner_image_size">23dp</dimen>
+    <dimen name="ad_owner_name_size">15sp</dimen>
+    <dimen name="ad_owner_role_size">14sp</dimen>
+    <dimen name="ad_owner_margin_bottom">36dp</dimen>
+    <dimen name="ad_owner_margin_start">29dp</dimen>
+    <dimen name="ad_view_text_size">16sp</dimen>
+    <dimen name="ad_card_margin">7dp</dimen>
+    <dimen name="details_card_radius">50dp</dimen>
+    <dimen name="details_card_height">340dp</dimen>
 
 
 </resources>

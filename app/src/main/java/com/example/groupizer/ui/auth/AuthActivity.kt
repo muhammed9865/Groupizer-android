@@ -8,14 +8,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.groupizer.R
-import com.example.groupizer.databinding.ActivityMainBinding
+import com.example.groupizer.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityAuthBinding
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        binding = ActivityAuthBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar)
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_background"
+            android:layout_width="373dp"
+            android:layout_height="162dp"
+            android:layout_gravity="center"
+            android:background="@drawable/pending_bg"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/view_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="40dp"
+                android:background="?android:selectableItemBackground"
+                android:fontFamily="@font/sego_semibold"
+                android:text="@string/view"
+                android:textColor="@color/white"
+                android:textSize="@dimen/card_view_button_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_view_group_name_margin_start"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.9"
+                android:ellipsize="end"
+                android:fontFamily="@font/sego_semibold"
+                android:maxLength="12"
+                android:text="Group nameasdasd"
+                android:textColor="@color/white"
+                android:textSize="@dimen/card_view_group_name_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.208"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

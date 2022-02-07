@@ -4,13 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.groupizer.pojo.model.LoginForm
-import com.example.groupizer.pojo.repository.GroupizerRepository
-import com.example.groupizer.pojo.response.AuthResponse
-import com.example.groupizer.ui.isValidEmail
-import com.example.groupizer.ui.isValidPassword
+import com.example.groupizer.pojo.model.auth.LoginForm
+import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.pojo.model.auth.AuthResponse
 
-class LoginViewModel(private val repository: GroupizerRepository) : ViewModel() {
+class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
 

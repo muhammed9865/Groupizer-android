@@ -1,8 +1,7 @@
 package com.example.groupizer.ui.auth.register.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.groupizer.pojo.model.Interest
-import com.example.groupizer.pojo.response.InterestsResponse
+import com.example.groupizer.pojo.model.interest.InterestsResponse
 
 class InterestsDiff:DiffUtil.ItemCallback<InterestsResponse>() {
     override fun areItemsTheSame(oldItem: InterestsResponse, newItem: InterestsResponse): Boolean {

@@ -14,8 +14,30 @@
     <string name="display_name">Display Name</string>
     <string name="already_a_member">Already a member?</string>
     <string name="next">Next</string>
-    <string name="choose_your_preferences">Choose your preferences</string>
+    <string name="choose_your_preferences">Choose Your Preferences</string>
     <string name="interests_sub_header">Interests are used to select the groups you prefer</string>
     <string name="finish">Finish</string>
     <string name="current_user">current user</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="user_token">user token</string>
+    <string name="other">Other</string>
+    <string name="view">View</string>
+    <string name="user_id">user id</string>
+    <string name="members">Members</string>
+    <string name="me">Me</string>
+    <string name="chat">Chat</string>
+    <string name="join_a_group_or_create_yours">Join a group or create yours</string>
+    <string name="administrator">Administrator</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search for a group</string>
+    <string name="sign_out">Sign out</string>
+    <string name="join">Join</string>
+    <string name="group_id">group id</string>
+    <string name="admin">Admin</string>
+
+    <string-array name="roles">
+        <item>Admin</item>
+        <item>Member</item>
+    </string-array>
 </resources>

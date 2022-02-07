@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_graph"
+    app:startDestination="@id/groupHome">
+
+    <fragment
+        android:id="@+id/groupHome"
+        android:name="com.example.groupizer.ui.group.home.GroupHome"
+        android:label="fragment_group_home"
+        tools:layout="@layout/fragment_group_home" >
+        <action
+            android:id="@+id/action_groupHome_to_groupChat"
+            app:destination="@id/groupChat" />
+        <action
+            android:id="@+id/action_groupHome_to_groupMembers"
+            app:destination="@id/groupMembers" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupChat"
+        android:name="com.example.groupizer.ui.group.chat.GroupChat"
+        android:label="fragment_group_chat"
+        tools:layout="@layout/fragment_group_chat" >
+        <action
+            android:id="@+id/action_groupChat_to_groupHome"
+            app:destination="@id/groupHome" />
+        <action
+            android:id="@+id/action_groupChat_to_groupMembers"
+            app:destination="@id/groupMembers" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupMembers"
+        android:name="com.example.groupizer.ui.group.members.GroupMembers"
+        android:label="fragment_group_members"
+        tools:layout="@layout/fragment_group_members" >
+        <action
+            android:id="@+id/action_groupMembers_to_groupHome"
+            app:destination="@id/groupHome" />
+        <action
+            android:id="@+id/action_groupMembers_to_groupChat"
+            app:destination="@id/groupChat" />
+        <action
+            android:id="@+id/action_groupMembers_to_members"
+            app:destination="@id/members" />
+    </fragment>
+    <fragment
+        android:id="@+id/members"
+        android:name="com.example.groupizer.ui.group.members.Members"
+        android:label="fragment_members"
+        tools:layout="@layout/fragment_members" />
+</navigation>

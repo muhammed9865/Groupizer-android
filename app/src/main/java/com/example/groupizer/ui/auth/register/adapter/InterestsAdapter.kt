@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.groupizer.databinding.InterestCircleItemBinding
-import com.example.groupizer.pojo.model.Interest
-import com.example.groupizer.pojo.response.InterestsResponse
+import com.example.groupizer.pojo.model.interest.InterestsResponse
 
 class InterestsAdapter(private val context: Context):ListAdapter<InterestsResponse, InterestsViewHolder>(InterestsDiff()) {
     private var interestCheck: InterestCheck? = null

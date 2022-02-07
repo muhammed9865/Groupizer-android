@@ -2,15 +2,10 @@ package com.example.groupizer.ui.auth.register.adapter
 
 import android.content.Context
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.widget.CompoundButton
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.example.groupizer.R
 import com.example.groupizer.databinding.InterestCircleItemBinding
-import com.example.groupizer.pojo.model.Interest
-import com.example.groupizer.pojo.response.InterestsResponse
+import com.example.groupizer.pojo.model.interest.InterestsResponse
 
 class InterestsViewHolder(
     private val context: Context,

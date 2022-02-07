@@ -7,14 +7,14 @@
 
         <variable
             name="homeFragment"
-            type="com.example.groupizer.ui.auth.home.HomeFragment" />
+            type="com.example.groupizer.ui.auth.start.HomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background"
-        tools:context=".ui.auth.home.HomeFragment">
+        tools:context=".ui.auth.start.HomeFragment">
 
 
         <TextView

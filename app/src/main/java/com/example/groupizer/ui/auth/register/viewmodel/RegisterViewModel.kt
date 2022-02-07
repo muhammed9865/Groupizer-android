@@ -2,19 +2,18 @@ package com.example.groupizer.ui.auth.register.viewmodel
 
 import android.os.Build
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.groupizer.pojo.model.Interest
-import com.example.groupizer.pojo.model.RegisterForm
-import com.example.groupizer.pojo.repository.GroupizerRepository
-import com.example.groupizer.pojo.response.AuthResponse
-import com.example.groupizer.pojo.response.InterestsResponse
+import com.example.groupizer.pojo.model.interest.Interest
+import com.example.groupizer.pojo.model.auth.RegisterForm
+import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.pojo.model.auth.AuthResponse
+import com.example.groupizer.pojo.model.interest.InterestsResponse
 import com.example.groupizer.ui.isValidEmail
 import com.example.groupizer.ui.isValidName
 import com.example.groupizer.ui.isValidPassword
 
-class RegisterViewModel(private val repository: GroupizerRepository) : ViewModel() {
+class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _name = MutableLiveData<String>()
     private val _email = MutableLiveData<String>()
     private val _password = MutableLiveData<String>()
@@ -55,6 +54,10 @@ class RegisterViewModel(private val repository: GroupizerRepository) : ViewModel
         _token.value = token
     }
 
+    fun getToken(): String? {
+        return _token.value
+    }
+
 
     fun addInterest(id: Int) {
         _interests.value!!.add(Interest(id))
@@ -80,8 +83,16 @@ class RegisterViewModel(private val repository: GroupizerRepository) : ViewModel
 
     suspend fun register(): AuthResponse? {
         //val registerForm = RegisterForm(_name.value!!, _email.value!!, _password.value!!)
-        return repository.registerUser(RegisterForm(_name.value!!, _email.value!!, _password.value!!))
-
+        if (_name.value.isValidName() && _email.value.isValidEmail() && _password.value.isValidPassword()) {
+            return repository.registerUser(
+                RegisterForm(
+                    _name.value!!,
+                    _email.value!!,
+                    _password.value!!
+                )
+            )
+        }
+        return null
     }
 
     suspend fun getAllInterests(): List<InterestsResponse>{

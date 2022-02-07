@@ -9,32 +9,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentLoginBinding
-import com.example.groupizer.pojo.model.LoginForm
-import com.example.groupizer.pojo.repository.GroupizerRepository
-import com.example.groupizer.ui.hideKeyboard
+import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.ui.*
 import com.example.groupizer.ui.auth.login.viewmodel.LoginViewModel
 import com.example.groupizer.ui.auth.login.viewmodel.LoginViewModelFactory
 import com.example.groupizer.ui.dashboard.DashboardActivity
-import com.example.groupizer.ui.hideProgress
-import com.example.groupizer.ui.showProgress
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
     val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(GroupizerRepository.getInstance())
+        LoginViewModelFactory(AuthRepository.getInstance())
     }
 
     override fun onCreateView(
@@ -65,15 +61,19 @@ class LoginFragment : Fragment() {
             try {
                 viewModel.login()?.let { user ->
                     val intent = Intent(requireActivity(), DashboardActivity::class.java)
-                    intent.putExtra(getString(R.string.current_user), LoginForm(user.email, user.password))
+                    saveId(user.id!!)
+                    intent.putExtra(getString(R.string.current_user), user.token)
                     startActivity(intent)
+                    requireActivity().finish()
                 }
                 hideProgress(binding.loggingProgressbar, binding.loginLoginBtn)
             }catch (e: HttpException) {
                 Log.d(TAG, "goToDashboard: ${e.response()}")
-                 Snackbar.make(binding.root, "Email or password is incorrect", Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(requireContext().getColor(R.color.red)).show()
+                showError(binding.root, "Either email or password is incorrect")
                 hideProgress(binding.loggingProgressbar, binding.loginLoginBtn)
+            }
+            catch (e: SocketTimeoutException) {
+                showError(binding.root, "No internet connection")
             }
 
 
