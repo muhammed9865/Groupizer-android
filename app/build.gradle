@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def nav_version = "2.4.0"
     def lifecycle_version = "2.3.1"
+    def scarlet_version = "0.1.12"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -73,5 +74,22 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1"
 
     implementation "androidx.activity:activity-ktx:1.4.0"
+
+
+
+    // Networking
+    // Scarlet for WebSockets
+
+    implementation 'com.tinder.scarlet:scarlet:0.1.12'
+    // Optional dependencies, based on your setup.
+    implementation "com.tinder.scarlet:lifecycle-android:$scarlet_version"
+    implementation "com.tinder.scarlet:websocket-okhttp:$scarlet_version"
+    implementation "com.tinder.scarlet:message-adapter-moshi:$scarlet_version"
+    implementation "com.tinder.scarlet:stream-adapter-coroutines:$scarlet_version"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:1.12.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
+
 
 }

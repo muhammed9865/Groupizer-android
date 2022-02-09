@@ -49,7 +49,7 @@ class SharedGroupsViewModel(private val repository: DashboardRepository): ViewMo
         val newList: ArrayList<GroupResponse> = arrayListOf()
         for (i in list) {
             for (j in i.membership) {
-                Log.d(TAG, "clearGroupsList: ${j.user}")
+               // Log.d(TAG, "clearGroupsList: ${j.user}")
                 j.user?.id?.let {
                     if (it == _id.value) {
                     if (j.role == Roles.ADMIN || j.role == Roles.MEMBER){

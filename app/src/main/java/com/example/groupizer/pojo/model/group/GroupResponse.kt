@@ -10,5 +10,6 @@ data class GroupResponse(
     val ad: Int,
     @SerializedName("memberships")
     var membership: ArrayList<Membership>,
-    val title: String
+    val title: String,
+    val chat: Int
 )

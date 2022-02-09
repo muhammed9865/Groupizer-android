@@ -15,7 +15,7 @@ class DashboardApiCall {
         return ApiBuilder.buildService(DashboardEndPoint::class.java)
     }
 
-    suspend fun getAds(auth_token: String):List<AdResponse> {
+    suspend fun getAds(auth_token: String): List<AdResponse> {
         return getService().getAds(auth_token).await()
     }
 
@@ -35,6 +35,13 @@ class DashboardApiCall {
         Log.d(TAG, "applyToGroup: ${auth_token.substring(6)}, id: ${groupApply.group}")
         return getService().applyToGroup(auth_token, groupApply).await()
     }
+
+    suspend fun changeMemberRank(auth_token: String, memberId: Int, membership: Membership) =
+        getService().changeMemberRank(auth_token, memberId, membership).await()
+
+    suspend fun getGroupMessages(auth_token: String, chat_id: Int) =
+        getService().getGroupMessages(auth_token, chat_id).await()
+
     companion object {
         private const val TAG = "DashboardApiCall"
     }

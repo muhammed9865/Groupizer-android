@@ -56,9 +56,9 @@ class ExploreFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     dialog.show()
                     dialog.join.setOnClickListener {
                         CoroutineScope(Dispatchers.Main).launch {
-                            viewModel.apply(GroupApply(ad.id))
+                            viewModel.apply(GroupApply(ad.group.id))
                             dialog.dismiss()
-                            showError(binding.root, "Testing")
+                            showError(binding.root, "${ad.group.id}")
                     }
                 }
 

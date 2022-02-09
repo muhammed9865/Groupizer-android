@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.groupizer.pojo.model.Roles
 import com.example.groupizer.pojo.model.auth.AuthResponse
+import com.example.groupizer.pojo.model.group.GroupRequest
 import com.example.groupizer.pojo.model.group.GroupResponse
 import com.example.groupizer.pojo.model.group.Membership
 import com.example.groupizer.pojo.repository.DashboardRepository
@@ -16,14 +17,18 @@ class GroupViewModel(private val repository: DashboardRepository) : ViewModel() 
     private val groups: LiveData<GroupResponse> = _group
     private val _members = MutableLiveData<List<Membership>>()
     private val members: LiveData<List<Membership>> = _members
+    private val groupId = MutableLiveData<Int>()
 
     fun setGroup(group: GroupResponse) {
         Log.d(TAG, "test setGroup: ${group.toString()}")
         _group.value = group
+        groupId.value = group.id
 
     }
 
     fun getGroup() = groups
+
+    fun getGroupId() = groupId.value
 
     fun getUser(id: Int): Membership? {
         var user: Membership? = null
@@ -40,7 +45,7 @@ class GroupViewModel(private val repository: DashboardRepository) : ViewModel() 
         val newList = ArrayList<Membership>()
 
         for (i in _group.value!!.membership) {
-            if (i.role == Roles.ADMIN || i.role == Roles.MEMBER) {
+            if (i.role == Roles.ADMIN || i.role == Roles.MEMBER || i.role == Roles.PENDING) {
                 if (i.id == id) {
                     continue
                 } else
@@ -50,4 +55,10 @@ class GroupViewModel(private val repository: DashboardRepository) : ViewModel() 
         _members.value = newList
         return members
     }
+
+    suspend fun updateGroup(auth_token: String, groupId: Int) =
+        repository.getGroupById(auth_token, GroupRequest(groupId))
+
+    suspend fun changeMemberRank(auth_token: String, memberId: Int, membership: Membership) =
+        repository.changeMemberRank(auth_token, memberId, membership)
 }

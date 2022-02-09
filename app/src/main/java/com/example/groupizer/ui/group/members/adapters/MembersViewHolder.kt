@@ -18,13 +18,21 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         groupMemberItemEmail.text = item.user?.email
         newRole = item.role
         setUpRankSpinner()
+       // isAdmin(item)
         if (item.role == Roles.ADMIN) {
             rankSpiner.setSelection(0)
         }else rankSpiner.setSelection(1)
 
-        binding.saveRank.setOnClickListener {
-            if (item.role != newRole)
+        binding.promoteRank.setOnClickListener {
+            if (item.role != newRole) {
+                item.role = newRole
                 newRank?.onRankChanged(item)
+            }
+        }
+
+        binding.kickBtn.setOnClickListener {
+            item.role = Roles.REJECTED
+            newRank?.onRankChanged(item)
         }
 
     }
@@ -56,5 +64,19 @@ class MembersViewHolder(private val context: Context, private val binding: Group
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
         TODO("Not yet implemented")
+    }
+
+    private fun isAdmin(item: Membership) {
+        if (item.role != Roles.ADMIN) {
+            binding.promoteRank.visibility = View.INVISIBLE
+            binding.kickBtn.visibility = View.INVISIBLE
+            binding.rankSpiner.isClickable = false
+            binding.rankSpiner.isEnabled = false
+        }else {
+            binding.promoteRank.visibility = View.VISIBLE
+            binding.kickBtn.visibility = View.VISIBLE
+            binding.rankSpiner.isClickable = true
+            binding.rankSpiner.isEnabled = true
+        }
     }
 }

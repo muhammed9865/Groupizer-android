@@ -2,6 +2,8 @@ package com.example.groupizer.pojo.remote.dashboard
 
 import com.example.groupizer.pojo.model.ad.Ad
 import com.example.groupizer.pojo.model.ad.AdResponse
+import com.example.groupizer.pojo.model.chat.group.messages.ChatMessages
+import com.example.groupizer.pojo.model.chat.group.messages.Message
 import com.example.groupizer.pojo.model.group.GroupApply
 import com.example.groupizer.pojo.model.group.GroupResponse
 import com.example.groupizer.pojo.model.group.Membership
@@ -36,4 +38,18 @@ interface DashboardEndPoint {
         @Header("Authorization") auth_token: String,
         @Body groupApply: GroupApply
     ): Call<Membership>
+
+    @PUT("/memberships/{id}/")
+    fun changeMemberRank(
+        @Header("Authorization") auth_token: String,
+        @Path("id") memberId: Int,
+        @Body membership: Membership
+    ): Call<Membership>
+
+
+    @GET("/chats/{chat_id}")
+    fun getGroupMessages(
+        @Header("Authorization") auth_token: String,
+        @Path("chat_id") chat_id: Int
+    ): Call<ChatMessages>
 }

@@ -17,9 +17,17 @@ class DashboardRepository(private val api: DashboardApiCall) {
 
     suspend fun getUserGroups(auth_token: String) = api.getUserGroups(auth_token)
 
-    suspend fun getGroupById(auth_token: String, groupRequest: GroupRequest) = api.getGroupById(auth_token, groupRequest)
+    suspend fun getGroupById(auth_token: String, groupRequest: GroupRequest) =
+        api.getGroupById(auth_token, groupRequest)
 
-    suspend fun applyToGroup(auth_token: String, groupApply: GroupApply) = api.applyToGroup(auth_token, groupApply)
+    suspend fun applyToGroup(auth_token: String, groupApply: GroupApply) =
+        api.applyToGroup(auth_token, groupApply)
+
+    suspend fun changeMemberRank(auth_token: String, memberId: Int, membership: Membership) =
+        api.changeMemberRank(auth_token, memberId, membership)
+
+    suspend fun getGroupMessages(auth_token: String, chat_id: Int) = api.getGroupMessages(auth_token, chat_id)
+
 
     companion object {
         private val lock = Any()

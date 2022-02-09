@@ -7,6 +7,6 @@ import com.example.groupizer.pojo.model.auth.AuthResponse
 data class Membership(
     val group: Int,
     val id: Int,
-    val role: String?,
+    var role: String?,
     val user: AuthResponse?
 )

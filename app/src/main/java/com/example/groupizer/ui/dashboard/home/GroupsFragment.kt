@@ -97,6 +97,7 @@ class GroupsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Toolbar
                     binding.noGroupsLayout.visibility = View.GONE
                 }else binding.noGroupsLayout.visibility = View.VISIBLE
 
+                // Todo Change back to GroupsList
                 groupsAdapter.submitList(groupsList)
                 setupGroupsRv(groupsAdapter)
                  binding.refresher.isRefreshing = false

@@ -2,7 +2,9 @@ package com.example.groupizer.pojo.model.auth
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class AuthResponse(
     val id: Int?,
     val email: String,
