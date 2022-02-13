@@ -10,21 +10,25 @@ import com.example.groupizer.Constants
 import com.example.groupizer.pojo.model.chat.SendMessage
 import com.example.groupizer.pojo.model.chat.group.messages.Message
 import com.example.groupizer.pojo.repository.DashboardRepository
+import com.example.groupizer.ui.group.chat.MessageReceive
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import kotlin.math.log
 
 class ChatViewModel(private val repository: DashboardRepository, token: String, chat_id: Int) : ViewModel() {
-    private val _messages = MutableLiveData<MutableList<Message>>(mutableListOf())
+    val _messages = MutableLiveData<MutableList<Message>>(mutableListOf())
     val messages: LiveData<MutableList<Message>> = _messages
     private val token = MutableLiveData(token)
     private val chat = MutableLiveData(chat_id)
 
     private val gson = Gson()
     private var webSocket: WebSocket? = null
+
+    private var messageReceived: MessageReceive? = null
 
     init {
         val listener = object : WebSocketListener() {
@@ -40,7 +44,9 @@ class ChatViewModel(private val repository: DashboardRepository, token: String, 
             ) {
                 super.onMessage(webSocket, text)
                 Log.d(TAG, "onMessage: ${receiveMessage(text).user?.name } }}")
-                _messages.value?.add(receiveMessage(text))
+                val msg = receiveMessage(text)
+              //  _messages.value?.add(0, msg)
+                messageReceived?.onMessageReceived(msg)
             }
 
             override fun onClosing(
@@ -84,13 +90,17 @@ class ChatViewModel(private val repository: DashboardRepository, token: String, 
     suspend fun getAllMessages() = repository.getGroupMessages(token.value!!, chat.value!!)
 
     fun setMessages(messages: MutableList<Message>) {
-        _messages.value = messages
+        _messages.postValue(messages)
     }
 
 
+    fun onMessageReceived(messageReceive: MessageReceive) {
+        this.messageReceived = messageReceive
+    }
+
     override fun onCleared() {
         super.onCleared()
-        webSocket?.close(200, "User left the chat")
+        webSocket?.close(1000, "User left the chat")
     }
 
     companion object {

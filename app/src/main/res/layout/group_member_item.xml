@@ -4,22 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:cardElevation="0dp"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        android:paddingBottom="10dp"
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="#AFACAC">
+            android:background="#1F93AF"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/man"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/man" />
@@ -31,7 +36,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/sego_semibold"
                 android:text="Muhammed slaman"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView9"
                 app:layout_constraintStart_toEndOf="@+id/imageView9"
@@ -42,6 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:tint="#434343"
+                android:src="@drawable/ic_mail"
                 app:layout_constraintEnd_toEndOf="@+id/imageView9"
                 app:layout_constraintStart_toStartOf="@+id/imageView9"
                 app:layout_constraintTop_toBottomOf="@+id/imageView9"
@@ -63,26 +70,28 @@
                 android:id="@+id/rank_spiner"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="@+id/promote_rank"
                 app:layout_constraintStart_toStartOf="@+id/promote_rank"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/group_member_item_name" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/promote_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
+
                 android:fontFamily="@font/sego_semibold"
-                android:text="Promote"
+                android:text="@string/promote"
                 android:textAllCaps="false"
                 android:textSize="15sp"
                 app:backgroundTint="#09EF09"
                 app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rank_spiner"
+                app:layout_constraintTop_toBottomOf="@+id/group_member_item_email"
                 app:strokeColor="@color/bright_blue" />
 
             <com.google.android.material.button.MaterialButton
@@ -90,16 +99,14 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="77dp"
                 android:layout_height="42dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sego"
                 android:text="Kick"
                 android:textColor="#FF0000"
                 android:textSize="15sp"
                 app:cornerRadius="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/promote_rank"
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
-                app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="@+id/promote_rank"
                 app:strokeColor="#FF0101" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
         android:visibility="visible"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/home_bg_color"
+        app:cardElevation="8dp"
+
         android:paddingBottom="@dimen/group_card_margin_bottom"
         app:cardCornerRadius="@dimen/group_card_radius">
 

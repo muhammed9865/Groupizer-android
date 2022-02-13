@@ -11,7 +11,7 @@ class AdsAdapter:ListAdapter<AdResponse, AdsViewHolder>(AdsCallback()) {
     private var viewAd: ViewAd? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdsViewHolder {
         val binding = AdItemBinding.inflate(LayoutInflater.from(parent.context))
-        binding.root.layoutParams = RecyclerView.LayoutParams((parent as RecyclerView).layoutManager!!.width,
+        binding.root.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
             RecyclerView.LayoutParams.WRAP_CONTENT)
         return AdsViewHolder(binding)
     }

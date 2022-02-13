@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,7 +20,7 @@ import com.example.groupizer.ui.group.viewmodel.MembersGroupFactory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class GroupActivity : AppCompatActivity() {
+class GroupActivity : FragmentActivity() {
     private lateinit var binding: ActivityGroupBinding
     private lateinit var navController: NavController
     private val viewModel: GroupViewModel by viewModels {
@@ -37,25 +38,34 @@ class GroupActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.botNav, navController)
         bottomNavDestListener()
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.groupHome -> {
-                    binding.groupToolbar.visibility = View.VISIBLE
+                    binding.groupToolbarLayout.visibility = View.VISIBLE
                     window?.statusBarColor = getColor(R.color.white)
                     binding.groupActivityName.visibility = View.VISIBLE
                 }
 
                 R.id.groupChat -> {
                     window?.statusBarColor = getColor(R.color.white)
-                    binding.groupToolbar.visibility = View.VISIBLE
+                    binding.groupToolbarLayout.visibility = View.VISIBLE
                     binding.groupActivityName.visibility = View.VISIBLE
+                    window?.statusBarColor = getColor(R.color.white)
                 }
-                R.id.groupMembers -> {
+                R.id.members -> {
                     window?.statusBarColor = getColor(R.color.bright_blue)
-                    binding.groupToolbar.visibility = View.GONE
+                    binding.groupToolbarLayout.visibility = View.GONE
                     binding.groupActivityName.visibility = View.GONE
                 }
+                R.id.requests -> {
+                    window?.statusBarColor = getColor(R.color.white)
+                    binding.groupToolbarLayout.visibility = View.VISIBLE
+                    binding.groupActivityName.visibility = View.VISIBLE
+
+                }
+
 
 
             }
@@ -80,13 +90,19 @@ class GroupActivity : AppCompatActivity() {
                     true
                 }
                 R.id.group_members -> {
-                    navController.navigate(R.id.groupMembers)
+                    navController.navigate(R.id.members)
                     true
                 }
                 R.id.group_home -> {
                     navController.navigate(R.id.groupHome)
                     true
                 }
+                R.id.group_requests  -> {
+                    navController.navigate(R.id.requests)
+                    true
+                }
+
+
 
                 else -> false
             }

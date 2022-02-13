@@ -32,8 +32,17 @@
     </style>
 
     <style name="PauseDialogAnimation" parent="android:Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/from_right</item>
-        <item name="android:windowExitAnimation">@anim/to_right</item>
+        <item name="android:windowEnterAnimation">@anim/from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/to_bottom</item>
+    </style>
+
+    <style name="AdDialog">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>

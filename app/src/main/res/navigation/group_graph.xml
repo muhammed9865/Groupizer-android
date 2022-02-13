@@ -14,8 +14,11 @@
             android:id="@+id/action_groupHome_to_groupChat"
             app:destination="@id/groupChat" />
         <action
-            android:id="@+id/action_groupHome_to_groupMembers"
-            app:destination="@id/groupMembers" />
+            android:id="@+id/action_groupHome_to_members"
+            app:destination="@id/members" />
+        <action
+            android:id="@+id/action_groupHome_to_requests"
+            app:destination="@id/requests" />
     </fragment>
     <fragment
         android:id="@+id/groupChat"
@@ -25,28 +28,22 @@
         <action
             android:id="@+id/action_groupChat_to_groupHome"
             app:destination="@id/groupHome" />
-        <action
-            android:id="@+id/action_groupChat_to_groupMembers"
-            app:destination="@id/groupMembers" />
-    </fragment>
-    <fragment
-        android:id="@+id/groupMembers"
-        android:name="com.example.groupizer.ui.group.members.GroupMembers"
-        android:label="fragment_group_members"
-        tools:layout="@layout/fragment_group_members" >
-        <action
-            android:id="@+id/action_groupMembers_to_groupHome"
-            app:destination="@id/groupHome" />
-        <action
-            android:id="@+id/action_groupMembers_to_groupChat"
-            app:destination="@id/groupChat" />
-        <action
-            android:id="@+id/action_groupMembers_to_members"
-            app:destination="@id/members" />
     </fragment>
     <fragment
         android:id="@+id/members"
         android:name="com.example.groupizer.ui.group.members.Members"
         android:label="fragment_members"
-        tools:layout="@layout/fragment_members" />
+        tools:layout="@layout/fragment_members" >
+        <action
+            android:id="@+id/action_members_to_requests"
+            app:destination="@id/requests" />
+    </fragment>
+    <fragment
+        android:id="@+id/requests"
+        android:name="com.example.groupizer.ui.group.members.Requests"
+        android:label="Requests" >
+        <action
+            android:id="@+id/action_requests_to_members"
+            app:destination="@id/members" />
+    </fragment>
 </navigation>

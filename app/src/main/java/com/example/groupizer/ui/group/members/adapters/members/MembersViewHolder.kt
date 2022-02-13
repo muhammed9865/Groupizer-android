@@ -1,5 +1,6 @@
-package com.example.groupizer.ui.group.members.adapters
+package com.example.groupizer.ui.group.members.adapters.members
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.widget.AdapterView
@@ -13,15 +14,15 @@ import com.example.groupizer.pojo.model.group.Membership
 class MembersViewHolder(private val context: Context, private val binding: GroupMemberItemBinding) :
     RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
     private var newRole: String? = null
-    fun bind(item: Membership, newRank: NewRank?) = with(binding) {
+    fun bind(item: Membership, newRank: NewRank?, isAdmin: Boolean) = with(binding) {
         groupMemberItemName.text = item.user?.name
         groupMemberItemEmail.text = item.user?.email
         newRole = item.role
         setUpRankSpinner()
-       // isAdmin(item)
+        isAdmin(isAdmin)
         if (item.role == Roles.ADMIN) {
             rankSpiner.setSelection(0)
-        }else rankSpiner.setSelection(1)
+        } else rankSpiner.setSelection(1)
 
         binding.promoteRank.setOnClickListener {
             if (item.role != newRole) {
@@ -31,8 +32,10 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         }
 
         binding.kickBtn.setOnClickListener {
-            item.role = Roles.REJECTED
-            newRank?.onRankChanged(item)
+            if (kickMember(item.user?.name.toString())) {
+                item.role = Roles.REJECTED
+                newRank?.onRankChanged(item)
+            }
         }
 
     }
@@ -66,17 +69,34 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         TODO("Not yet implemented")
     }
 
-    private fun isAdmin(item: Membership) {
-        if (item.role != Roles.ADMIN) {
+    private fun isAdmin(isAdmin: Boolean) {
+        if (!isAdmin) {
             binding.promoteRank.visibility = View.INVISIBLE
             binding.kickBtn.visibility = View.INVISIBLE
             binding.rankSpiner.isClickable = false
             binding.rankSpiner.isEnabled = false
-        }else {
+        } else {
             binding.promoteRank.visibility = View.VISIBLE
             binding.kickBtn.visibility = View.VISIBLE
             binding.rankSpiner.isClickable = true
             binding.rankSpiner.isEnabled = true
         }
+    }
+
+    private fun kickMember(userName: String): Boolean {
+        var isKicked = false
+        AlertDialog.Builder(context)
+            .setMessage("Are you sure you want to kick ${userName}?")
+            .setPositiveButton("Kick") { d, _ ->
+                isKicked = true
+                d.dismiss()
+                d.cancel()
+            }
+            .setNegativeButton("Cancel") { d, _ ->
+                isKicked = false
+                d.dismiss()
+                d.cancel()
+            }.show()
+        return isKicked
     }
 }

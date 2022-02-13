@@ -16,4 +16,6 @@
     <color name="my_groups_bg_color">#FBF6F8</color>
     <color name="group_description_color">#707070</color>
     <color name="green">#07B307</color>
+    <color name="yellow">#FFC400</color>
+    <color name="rejected_color">#F50057</color>
 </resources>

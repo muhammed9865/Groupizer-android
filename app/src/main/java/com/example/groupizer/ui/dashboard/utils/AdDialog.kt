@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.WindowManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.groupizer.R
 import com.example.groupizer.databinding.NewAddDialogBinding
 
 class AdDialog(context: Context): Dialog(context) {
@@ -18,6 +20,8 @@ class AdDialog(context: Context): Dialog(context) {
 
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+
 
 
     }

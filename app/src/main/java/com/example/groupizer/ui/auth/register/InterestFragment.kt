@@ -56,7 +56,6 @@ class InterestFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 viewModel.getAllInterests()?.let {
-                    Log.d(TAG, "prepareRvAdapter: ${it[0].title}")
                     adapter.submitList(it)
                     adapter.setInterestCheck(object : InterestCheck {
                         override fun onInterestChecked(id: Int, isChecked: Boolean) {

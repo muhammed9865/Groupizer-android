@@ -1,6 +1,7 @@
 package com.example.groupizer.ui.dashboard.home.others_adapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.groupizer.R
@@ -14,11 +15,15 @@ class OthersViewHolder(private val binding: GroupItemBinding): RecyclerView.View
         for (member in item.membership) {
             if (member.user?.id == userId) {
                 if (member.role == Roles.PENDING) {
-                    binding.cardBackground.visibility = View.VISIBLE
-                    binding.cardBackground.background = context.getDrawable(R.drawable.pending_bg)
+                    binding.groupStatus.apply {
+                        text = context.getString(R.string.pending)
+                        setTextColor(context.getColor(R.color.yellow))
+                    }
                 }else if (member.role == Roles.REJECTED) {
-                    binding.cardBackground.visibility = View.VISIBLE
-                    binding.cardBackground.background = context.getDrawable(R.drawable.rejected_bg)
+                    binding.groupStatus.apply {
+                        text = context.getString(R.string.rejected)
+                        setTextColor(context.getColor(R.color.rejected_color))
+                    }
                 }
             }
         }

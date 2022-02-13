@@ -45,7 +45,7 @@ class GroupViewModel(private val repository: DashboardRepository) : ViewModel() 
         val newList = ArrayList<Membership>()
 
         for (i in _group.value!!.membership) {
-            if (i.role == Roles.ADMIN || i.role == Roles.MEMBER || i.role == Roles.PENDING) {
+            if (i.role == Roles.ADMIN || i.role == Roles.MEMBER) {
                 if (i.id == id) {
                     continue
                 } else
@@ -55,6 +55,19 @@ class GroupViewModel(private val repository: DashboardRepository) : ViewModel() 
         _members.value = newList
         return members
     }
+
+    fun getRequests(): LiveData<List<Membership>> {
+        val newList = ArrayList<Membership>()
+
+        for (i in _group.value!!.membership) {
+            if (i.role == Roles.PENDING) {
+                    newList.add(i)
+            }
+        }
+        _members.value = newList
+        return members
+    }
+
 
     suspend fun updateGroup(auth_token: String, groupId: Int) =
         repository.getGroupById(auth_token, GroupRequest(groupId))

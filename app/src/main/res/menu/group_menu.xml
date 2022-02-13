@@ -18,4 +18,8 @@
         android:orderInCategory="3"
         android:icon="@drawable/ic_baseline_group_24"
         android:enabled="true"/>
+    <item android:id="@+id/group_requests"
+        android:title="@string/requests"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:enabled="true"/>
 </menu>

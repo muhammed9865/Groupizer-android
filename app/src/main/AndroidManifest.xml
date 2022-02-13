@@ -15,7 +15,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.group.GroupActivity"
             android:exported="true"
-            android:theme="@style/Theme.Group">
+            android:theme="@style/Theme.Group"
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity

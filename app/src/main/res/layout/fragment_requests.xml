@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.group.members.Requests">
@@ -11,6 +11,28 @@
             android:id="@+id/group_activity_members_requests_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/empty_requests_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            tools:visibility="invisible"
+            android:fontFamily="@font/sego_semibold"
+            android:textColor="@color/black"
+            android:text="@string/_0_new_requests" />
+
+        <TextView
+            android:id="@+id/not_authorized"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:fontFamily="@font/sego_semibold"
+            android:textColor="@color/black"
+            android:text="@string/you_are_not_authorized"/>
 
     </FrameLayout>
 </layout>

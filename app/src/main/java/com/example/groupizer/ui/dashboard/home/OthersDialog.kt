@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.groupizer.R
 import com.example.groupizer.databinding.OthersDialogBinding
@@ -14,14 +15,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class OthersDialog(context: Context, viewModel: SharedGroupsViewModel): Dialog(context, R.style.PauseDialog) {
+class OthersDialog(context: Context, viewModel: SharedGroupsViewModel) :
+    Dialog(context, R.style.PauseDialog) {
     private val binding = OthersDialogBinding.inflate(LayoutInflater.from(context))
+
     init {
         setContentView(binding.root)
         show()
         setupRecyclerView(viewModel)
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,7 +41,12 @@ class OthersDialog(context: Context, viewModel: SharedGroupsViewModel): Dialog(c
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.getAllGroups().let {
                 val list = viewModel.clearOthersList(it)
-                iAdapter.submitList(list)
+                if (list.isNotEmpty()) {
+                    iAdapter.submitList(list)
+                    binding.emptyPendingList.visibility = View.GONE
+                }else {
+                    binding.emptyPendingList.visibility = View.VISIBLE
+                }
             }
 
             binding.othersRv.apply {

@@ -8,12 +8,21 @@
         android:layout_height="match_parent"
         tools:context=".ui.group.GroupActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/group_toolbar"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/group_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            app:cardElevation="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/group_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/group_nav_host"
@@ -22,7 +31,7 @@
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/bot_nav"
-            app:layout_constraintTop_toBottomOf="@+id/group_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/group_toolbar_layout"
             app:navGraph="@navigation/group_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -41,12 +50,13 @@
             android:layout_height="wrap_content"
             tools:text="Group name"
             android:textSize="20sp"
+            android:elevation="20dp"
             android:textColor="@color/black"
             android:fontFamily="@font/sego_semibold"
-            app:layout_constraintBottom_toBottomOf="@+id/group_toolbar"
-            app:layout_constraintEnd_toEndOf="@+id/group_toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/group_toolbar_layout"
+            app:layout_constraintEnd_toEndOf="@+id/group_toolbar_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/group_toolbar" />
+            app:layout_constraintTop_toTopOf="@+id/group_toolbar_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

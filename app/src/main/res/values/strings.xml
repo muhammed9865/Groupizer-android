@@ -35,6 +35,14 @@
     <string name="join">Join</string>
     <string name="group_id">group id</string>
     <string name="admin">Admin</string>
+    <string name="requests">Requests</string>
+    <string name="message">Enter Message</string>
+    <string name="you_ve_no_pending_requests">You\'ve no pending requests</string>
+    <string name="promote">Promote</string>
+    <string name="_0_new_requests">0 New Requests</string>
+    <string name="you_are_not_authorized">You are not authorized</string>
+    <string name="rejected">Rejected</string>
+    <string name="pending">Pending</string>
 
     <string-array name="roles">
         <item>Admin</item>

@@ -19,6 +19,7 @@ import com.example.groupizer.ui.dashboard.viewmodel.GroupsViewModelFactory
 import com.example.groupizer.ui.dashboard.viewmodel.SharedGroupsViewModel
 import com.example.groupizer.ui.dashboard.details.DetailsDialog
 import com.example.groupizer.ui.showError
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,7 +59,8 @@ class ExploreFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         CoroutineScope(Dispatchers.Main).launch {
                             viewModel.apply(GroupApply(ad.group.id))
                             dialog.dismiss()
-                            showError(binding.root, "${ad.group.id}")
+                            Snackbar.make(binding.root, "Application was sent successfully to ${ad.title}", Snackbar.LENGTH_LONG)
+                                .show()
                     }
                 }
 

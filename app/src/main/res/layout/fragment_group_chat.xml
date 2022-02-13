@@ -9,11 +9,13 @@
         tools:context=".ui.group.chat.GroupChat">
 
 
-        <Button
+        <ImageView
             android:id="@+id/send_message_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_baseline_send_24"
+            android:tint="@color/pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/message" />
@@ -26,12 +28,20 @@
             android:layout_margin="5dp"
             android:layout_marginBottom="16dp"
             android:ems="10"
-            android:hint="MeSSAGE"
+            android:hint="@string/message"
             android:gravity="top|start"
             android:inputType="textPersonName"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/send_message_btn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#72707070"
+            app:layout_constraintBottom_toTopOf="@+id/message"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
