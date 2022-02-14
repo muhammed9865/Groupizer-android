@@ -2,6 +2,7 @@ package com.example.groupizer.ui.group.members.adapters.members
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +14,7 @@ import com.example.groupizer.pojo.model.group.Membership
 
 class MembersViewHolder(private val context: Context, private val binding: GroupMemberItemBinding) :
     RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
+    private  val TAG = "MembersViewHolder"
     private var newRole: String? = null
     fun bind(item: Membership, newRank: NewRank?, isAdmin: Boolean) = with(binding) {
         groupMemberItemName.text = item.user?.name
@@ -32,10 +34,20 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         }
 
         binding.kickBtn.setOnClickListener {
-            if (kickMember(item.user?.name.toString())) {
-                item.role = Roles.REJECTED
-                newRank?.onRankChanged(item)
-            }
+            AlertDialog.Builder(context)
+                .setMessage("Are you sure you want to kick ${item.user?.name}?")
+                .setPositiveButton("Kick") { d, _ ->
+                    newRole = Roles.REJECTED
+                    item.role = Roles.REJECTED
+                    newRank?.onRankChanged(item)
+                    d.dismiss()
+                    d.cancel()
+                }
+                .setNegativeButton("Cancel") { d, _ ->
+                    d.dismiss()
+                    d.cancel()
+                }.show()
+
         }
 
     }
@@ -83,20 +95,18 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         }
     }
 
-    private fun kickMember(userName: String): Boolean {
-        var isKicked = false
+    private fun kickMember(userName: String) {
         AlertDialog.Builder(context)
             .setMessage("Are you sure you want to kick ${userName}?")
             .setPositiveButton("Kick") { d, _ ->
-                isKicked = true
+                newRole = Roles.REJECTED
                 d.dismiss()
                 d.cancel()
             }
             .setNegativeButton("Cancel") { d, _ ->
-                isKicked = false
                 d.dismiss()
                 d.cancel()
             }.show()
-        return isKicked
+
     }
 }
