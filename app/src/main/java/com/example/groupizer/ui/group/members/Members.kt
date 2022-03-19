@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentMembersBinding
 import com.example.groupizer.pojo.model.Roles
 import com.example.groupizer.pojo.model.group.Membership
@@ -41,6 +39,8 @@ class Members : Fragment() {
         return binding.root
     }
     private fun prepareAdapter() {
+        getMembers(adapter)
+
         adapter.setNewRank(object : NewRank {
             override fun onRankChanged(membership: Membership) {
                 CoroutineScope(Dispatchers.Main).launch {
@@ -54,12 +54,10 @@ class Members : Fragment() {
             }
         })
 
-        getMembers(adapter)
-
     }
 
     private fun getMembers(adapter: MembersAdapter) {
-        activityViewModel.getMembers(getID()).observe(this) {
+        activityViewModel.getMembers(getID()).observe(viewLifecycleOwner) {
             adapter.submitList(it)
             prepareMembersList(adapter)
         }

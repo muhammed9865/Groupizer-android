@@ -13,7 +13,8 @@
     <color name="red">#9F0202</color>
     <color name="tabs_layout_color">@color/bright_blue</color>
     <color name="home_bg_color">#F6C3D9</color>
-    <color name="my_groups_bg_color">#FBF6F8</color>
+    <color name="my_groups_bg_color">#88167C95</color>
+    <!-- #FBF6F8 -->
     <color name="group_description_color">#707070</color>
     <color name="green">#07B307</color>
     <color name="yellow">#FFC400</color>

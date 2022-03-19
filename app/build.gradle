@@ -79,7 +79,6 @@ dependencies {
 
     // Networking
     // Scarlet for WebSockets
-
     implementation 'com.tinder.scarlet:scarlet:0.1.12'
     // Optional dependencies, based on your setup.
     implementation "com.tinder.scarlet:lifecycle-android:$scarlet_version"
