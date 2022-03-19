@@ -14,7 +14,7 @@ import com.example.groupizer.pojo.model.group.Membership
 
 class MembersViewHolder(private val context: Context, private val binding: GroupMemberItemBinding) :
     RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
-    private  val TAG = "MembersViewHolder"
+    private val TAG = "observeMembers"
     private var newRole: String? = null
     fun bind(item: Membership, newRank: NewRank?, isAdmin: Boolean) = with(binding) {
         groupMemberItemName.text = item.user?.name
@@ -27,6 +27,7 @@ class MembersViewHolder(private val context: Context, private val binding: Group
         } else rankSpiner.setSelection(1)
 
         binding.promoteRank.setOnClickListener {
+            Log.d(TAG, "bind: $newRole")
             if (item.role != newRole) {
                 item.role = newRole
                 newRank?.onRankChanged(item)
@@ -54,7 +55,7 @@ class MembersViewHolder(private val context: Context, private val binding: Group
 
     private fun setUpRankSpinner() {
         ArrayAdapter.createFromResource(
-            context,
+            itemView.context,
             R.array.roles,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -78,7 +79,6 @@ class MembersViewHolder(private val context: Context, private val binding: Group
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
     }
 
     private fun isAdmin(isAdmin: Boolean) {
@@ -93,20 +93,5 @@ class MembersViewHolder(private val context: Context, private val binding: Group
             binding.rankSpiner.isClickable = true
             binding.rankSpiner.isEnabled = true
         }
-    }
-
-    private fun kickMember(userName: String) {
-        AlertDialog.Builder(context)
-            .setMessage("Are you sure you want to kick ${userName}?")
-            .setPositiveButton("Kick") { d, _ ->
-                newRole = Roles.REJECTED
-                d.dismiss()
-                d.cancel()
-            }
-            .setNegativeButton("Cancel") { d, _ ->
-                d.dismiss()
-                d.cancel()
-            }.show()
-
     }
 }

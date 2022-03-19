@@ -20,7 +20,7 @@ import okhttp3.*
 import kotlin.math.log
 
 class ChatViewModel(private val repository: DashboardRepository, token: String, chat_id: Int) : ViewModel() {
-    val _messages = MutableLiveData<MutableList<Message>>(mutableListOf())
+    private val _messages = MutableLiveData<MutableList<Message>>(mutableListOf())
     val messages: LiveData<MutableList<Message>> = _messages
     private val token = MutableLiveData(token)
     private val chat = MutableLiveData(chat_id)

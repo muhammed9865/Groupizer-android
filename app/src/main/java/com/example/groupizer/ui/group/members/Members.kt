@@ -1,6 +1,7 @@
 package com.example.groupizer.ui.group.members
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,64 +19,48 @@ import com.example.groupizer.ui.group.viewmodel.GroupViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
-
 
 class Members : Fragment() {
 
     private val activityViewModel: GroupViewModel by activityViewModels()
     private lateinit var binding: FragmentMembersBinding
-    private lateinit var adapter: MembersAdapter
+    private val mAdapter: MembersAdapter by lazy {
+        MembersAdapter(requireContext(), isUserAdmin())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        adapter = MembersAdapter(requireContext(), isUserAdmin())
+    ): View {
         binding = FragmentMembersBinding.inflate(inflater, container, false)
+        binding.groupActivityMembersRv.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        activityViewModel.getMembers(getID())
         prepareUserDetails()
         prepareAdapter()
-
+        observeMembers()
 
         return binding.root
     }
-    private fun prepareAdapter() {
-        getMembers(adapter)
 
-        adapter.setNewRank(object : NewRank {
+    private fun prepareAdapter() {
+        mAdapter.setNewRank(object : NewRank {
             override fun onRankChanged(membership: Membership) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val memberId = membership.id
-                    activityViewModel.changeMemberRank(getToken()!!, memberId, membership)
-                    activityViewModel.updateGroup(getToken()!!, activityViewModel.getGroupId()!!).let {
-                        activityViewModel.setGroup(it)
-                        getMembers(adapter)
-                    }
-                }
+                activityViewModel.changeMemberRank(getToken()!!, membership, getID())
             }
         })
 
     }
 
-    private fun getMembers(adapter: MembersAdapter) {
-        activityViewModel.getMembers(getID()).observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            prepareMembersList(adapter)
+    private fun observeMembers() {
+        activityViewModel.members.observe(viewLifecycleOwner) {
+            Log.d(TAG, "observeMembers: $it")
+            mAdapter.submitList(it)
         }
     }
 
-    private fun prepareMembersList(iAdapter: MembersAdapter) {
-        val list = binding.groupActivityMembersRv
-
-        list.apply {
-            try {
-                adapter = iAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-            }catch (e: NullPointerException) {
-               /* requireActivity().finish()*/
-            }
-
-        }
-    }
 
     private fun prepareUserDetails() {
         activityViewModel.getUser(getID()).let { membership ->
@@ -92,5 +77,8 @@ class Members : Fragment() {
         return activityViewModel.getUser(getID())?.role == Roles.ADMIN
     }
 
+    companion object {
+        private const val TAG = "Members"
+    }
 
 }

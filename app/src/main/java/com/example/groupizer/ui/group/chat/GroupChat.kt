@@ -26,7 +26,7 @@ class GroupChat : Fragment() {
     private val chatViewModel: ChatViewModel by viewModels {
         ChatViewModelFactory(
             DashboardRepository.getInstance(),
-            getToken()!!, mainViewModel.getGroup().value!!.chat
+            getToken()!!, mainViewModel.getChatId()
         )
 
     }

@@ -1,6 +1,7 @@
 package com.example.groupizer.ui.group.members
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,14 +31,18 @@ class Requests : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRequestsBinding.inflate(inflater, container, false)
         // Attach the adapter to the list
         binding.groupActivityMembersRequestsRv.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        viewModel.getRequests()
+        observeRequests()
+
         onMemberRankChanged()
+
 
         // Inflate the layout for this fragment
         return binding.root
@@ -46,41 +51,38 @@ class Requests : Fragment() {
     private fun onMemberRankChanged() {
         mAdapter.setMemberResult(object : NewRank {
             override fun onRankChanged(membership: Membership) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val memberId = membership.id
-                    viewModel.changeMemberRank(getToken()!!, memberId, membership)
-                    viewModel.updateGroup(getToken()!!, viewModel.getGroupId()!!).let {
-                        viewModel.setGroup(it)
-                        getMembers()
-                    }
-                }
+                val memberId = membership.id
+                viewModel.answerPendingRequest(getToken()!!, memberId, membership)
+                //viewModel.updateGroup(getToken()!!, viewModel.getGroupId()!!)
             }
         })
 
 
     }
 
-    private fun getMembers() {
-        viewModel.getRequests().observe(viewLifecycleOwner) { members ->
-            if (isUserAuthorized()) {
+    private fun observeRequests() {
+        if (isUserAuthorized()) {
+        viewModel.members.observe(viewLifecycleOwner) { members ->
+            Log.d(TAG, "observeRequests: $members")
                 binding.notAuthorized.visibility = View.GONE
                 binding.emptyRequestsList.visibility =
                     if (members.isEmpty()) View.VISIBLE else View.GONE
                 mAdapter.submitList(members)
                 mAdapter.submitList(members)
-                binding.emptyRequestsList.visibility = View.VISIBLE
-
-            } else {
-                binding.emptyRequestsList.visibility = View.GONE
-                binding.notAuthorized.visibility = View.VISIBLE
             }
+        } else {
+            binding.emptyRequestsList.visibility = View.GONE
+            binding.notAuthorized.visibility = View.VISIBLE
         }
     }
 
 
-
     private fun isUserAuthorized(): Boolean {
         return viewModel.getUser(getID())?.role == Roles.ADMIN
+    }
+
+    companion object {
+        private const val TAG = "Requests"
     }
 
 }
