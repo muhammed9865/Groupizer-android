@@ -53,7 +53,6 @@ class Requests : Fragment() {
             override fun onRankChanged(membership: Membership) {
                 val memberId = membership.id
                 viewModel.answerPendingRequest(getToken()!!, memberId, membership)
-                //viewModel.updateGroup(getToken()!!, viewModel.getGroupId()!!)
             }
         })
 

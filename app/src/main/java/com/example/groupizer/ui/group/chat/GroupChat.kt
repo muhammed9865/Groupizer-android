@@ -1,6 +1,8 @@
 package com.example.groupizer.ui.group.chat
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,20 +32,22 @@ class GroupChat : Fragment() {
         )
 
     }
-    private lateinit var adapter: MessagesAdapter
+    private val mAdapter: MessagesAdapter by lazy {
+        MessagesAdapter(getID())
+    }
     private lateinit var binding: FragmentGroupChatBinding
-    private lateinit var newMessages: MutableList<Message>
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentGroupChatBinding.inflate(inflater, container, false)
-        adapter = MessagesAdapter(getID())
 
+        binding.messagesRv.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true)
+        }
 
-
-        prepareAdapter()
 
         // On Send Button clicked, it will be sent.
         binding.sendMessageBtn.setOnClickListener {
@@ -53,52 +57,24 @@ class GroupChat : Fragment() {
                     binding.message.text.clear()
                 }
             }
+        }
 
+        chatViewModel.getAllMessages()
+        chatViewModel.messages.observe(viewLifecycleOwner) {
+            it.forEach { msg ->
+                Log.d(TAG, "onCreateView: ${msg.text}")
+            }
+            mAdapter.submitList(it)
+            mAdapter.notifyDataSetChanged()
         }
 
         // On Any Message Received, it will be added.
-        chatViewModel.onMessageReceived(object : MessageReceive {
-            override fun onMessageReceived(message: Message) {
-                runBlocking(Dispatchers.Main) {
-                    newMessages.add(0, message)
-                    adapter.submitList(newMessages)
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        })
         // Inflate the layout for this fragment
         return binding.root
     }
 
-    private fun prepareAdapter() {
-        CoroutineScope(Dispatchers.Main).launch {
-            chatViewModel.getAllMessages().let {
-                chatViewModel.setMessages(it.messages as MutableList<Message>)
-                newMessages = it.messages.asReversed()
-                observeChat()
-                setupMessagesRv(adapter)
-
-            }
-        }
-
-
-    }
-
-    private fun setupMessagesRv(iAdapter: MessagesAdapter) {
-        binding.messagesRv.apply {
-            adapter = iAdapter
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true)
-        }
-    }
-
-    private fun observeChat() {
-        adapter.submitList(newMessages)
-    }
-
-
-
     companion object {
-        private const val TAG = "GroupChat"
+        private const val TAG = "CHATTESTING"
     }
 
 

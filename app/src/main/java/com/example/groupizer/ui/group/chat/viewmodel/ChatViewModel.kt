@@ -5,30 +5,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.DialogFragmentNavigatorDestinationBuilder
 import com.example.groupizer.Constants
 import com.example.groupizer.pojo.model.chat.SendMessage
 import com.example.groupizer.pojo.model.chat.group.messages.Message
 import com.example.groupizer.pojo.repository.DashboardRepository
-import com.example.groupizer.ui.group.chat.MessageReceive
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import okhttp3.*
-import kotlin.math.log
+import java.util.*
 
-class ChatViewModel(private val repository: DashboardRepository, token: String, chat_id: Int) : ViewModel() {
+class ChatViewModel(private val repository: DashboardRepository, token: String, chat_id: Int) :
+    ViewModel() {
     private val _messages = MutableLiveData<MutableList<Message>>(mutableListOf())
     val messages: LiveData<MutableList<Message>> = _messages
     private val token = MutableLiveData(token)
     private val chat = MutableLiveData(chat_id)
-
     private val gson = Gson()
     private var webSocket: WebSocket? = null
-
-    private var messageReceived: MessageReceive? = null
 
     init {
         val listener = object : WebSocketListener() {
@@ -43,10 +37,9 @@ class ChatViewModel(private val repository: DashboardRepository, token: String, 
                 webSocket: WebSocket, text: String
             ) {
                 super.onMessage(webSocket, text)
-                Log.d(TAG, "onMessage: ${receiveMessage(text).user?.name } }}")
+                Log.d(TAG, "onMessage: ${receiveMessage(text).user?.name} }}")
                 val msg = receiveMessage(text)
-              //  _messages.value?.add(0, msg)
-                messageReceived?.onMessageReceived(msg)
+                setMessages(msg)
             }
 
             override fun onClosing(
@@ -75,27 +68,54 @@ class ChatViewModel(private val repository: DashboardRepository, token: String, 
 
     }
 
+    fun sendMessage(text: String) {
+        Log.d(TAG, "sendMessage: $text")
+        webSocket?.send(fromMessage(text))
+    }
+
+
+    /*
+       Encoding the message into json to be sent.
+    */
     private fun fromMessage(message: String): String {
         return gson.toJson(SendMessage(message))
     }
 
-    fun sendMessage(text: String) {
-        webSocket?.send(fromMessage(text))
-    }
-
+    /*
+        Decoding the received message into the Message data class.
+     */
     fun receiveMessage(message: String): Message {
+        Log.d(TAG, "receiveMessage: $message")
         return gson.fromJson(message, Message::class.java)
     }
 
-    suspend fun getAllMessages() = repository.getGroupMessages(token.value!!, chat.value!!)
+    /*
+        This is a normal http call, that fetches the messages
+        that's associated with the group id "chat".
+     */
+    fun getAllMessages() {
+        viewModelScope.launch {
+            flow {
+                emit(repository.getGroupMessages(token.value!!, chat.value!!))
+            }.collect {
+                // Reversing the list so it can appear as "reversed" hamada helal lol
+                _messages.value = it.messages.toMutableList().asReversed()
+            }
+        }
 
-    fun setMessages(messages: MutableList<Message>) {
-        _messages.postValue(messages)
     }
 
-
-    fun onMessageReceived(messageReceive: MessageReceive) {
-        this.messageReceived = messageReceive
+    /*
+        The received message is processed by this function.
+        it gets the messages value, then adds the new message at index 0
+        to be shown at the bottom of the list, as it's 'reversed'.
+     */
+    private fun setMessages(message: Message) {
+        viewModelScope.launch {
+            val newMessages = _messages.value
+            newMessages?.add(0,message)
+            _messages.value = newMessages!!
+        }
     }
 
     override fun onCleared() {
@@ -104,7 +124,7 @@ class ChatViewModel(private val repository: DashboardRepository, token: String, 
     }
 
     companion object {
-        private const val TAG = "ChatViewModel"
+        private const val TAG = "CHATTESTING"
     }
 
 }
