@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.groupizer.domain.repository.AuthRepository
 import com.example.groupizer.pojo.model.auth.LoginForm
-import com.example.groupizer.pojo.repository.AuthRepository
 import com.example.groupizer.pojo.model.auth.AuthResponse
 
 class LoginViewModel(private val repository: AuthRepository) : ViewModel() {

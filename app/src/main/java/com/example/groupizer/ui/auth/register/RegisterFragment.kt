@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentRegisterBinding
-import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.pojo.di.DataModule
 import com.example.groupizer.ui.*
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModel
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModelFactory
@@ -25,7 +25,7 @@ import retrofit2.HttpException
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by activityViewModels {
-        RegisterViewModelFactory(AuthRepository.getInstance())
+        RegisterViewModelFactory(DataModule.provideAuthRepository())
     }
 
     override fun onCreateView(
@@ -53,7 +53,6 @@ class RegisterFragment : Fragment() {
         hideKeyboard(binding.root)
         showProgress(binding.registeringProgressbar, binding.registerNextBtn)
         CoroutineScope(Dispatchers.Main).launch {
-
             try {
                 viewModel.register()?.let { user ->
                     viewModel.setToken(user.token)

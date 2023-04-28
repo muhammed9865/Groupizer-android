@@ -4,9 +4,9 @@ import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.groupizer.domain.repository.AuthRepository
 import com.example.groupizer.pojo.model.interest.Interest
 import com.example.groupizer.pojo.model.auth.RegisterForm
-import com.example.groupizer.pojo.repository.AuthRepository
 import com.example.groupizer.pojo.model.auth.AuthResponse
 import com.example.groupizer.pojo.model.interest.InterestsResponse
 import com.example.groupizer.ui.isValidEmail
@@ -66,17 +66,8 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
 
     fun removeInterest(id: Int) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            _interests.value!!.removeIf {
-                it.id == id
-            }
-        } else {
-            for (i in _interests.value!!) {
-                if (i.id == id) {
-                    _interests.value!!.remove(i)
-                    break
-                }
-            }
+        _interests.value!!.removeIf {
+            it.id == id
         }
     }
 

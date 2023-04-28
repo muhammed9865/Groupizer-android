@@ -2,7 +2,6 @@ package com.example.groupizer.ui.group.chat
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.groupizer.databinding.FragmentGroupChatBinding
-import com.example.groupizer.pojo.model.chat.group.messages.Message
 import com.example.groupizer.pojo.repository.DashboardRepository
 import com.example.groupizer.ui.group.chat.adapter.MessagesAdapter
 import com.example.groupizer.ui.getID
@@ -20,7 +18,7 @@ import com.example.groupizer.ui.getToken
 import com.example.groupizer.ui.group.chat.viewmodel.ChatViewModel
 import com.example.groupizer.ui.group.chat.viewmodel.ChatViewModelFactory
 import com.example.groupizer.ui.group.viewmodel.GroupViewModel
-import kotlinx.coroutines.*
+
 
 
 class GroupChat : Fragment() {
@@ -61,9 +59,6 @@ class GroupChat : Fragment() {
 
         chatViewModel.getAllMessages()
         chatViewModel.messages.observe(viewLifecycleOwner) {
-            it.forEach { msg ->
-                Log.d(TAG, "onCreateView: ${msg.text}")
-            }
             mAdapter.submitList(it)
             mAdapter.notifyDataSetChanged()
         }
@@ -73,9 +68,7 @@ class GroupChat : Fragment() {
         return binding.root
     }
 
-    companion object {
-        private const val TAG = "CHATTESTING"
-    }
+
 
 
 }

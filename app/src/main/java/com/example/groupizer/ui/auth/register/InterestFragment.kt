@@ -12,13 +12,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentInterestBinding
-import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.pojo.di.DataModule
 import com.example.groupizer.ui.auth.register.adapter.InterestCheck
 import com.example.groupizer.ui.auth.register.adapter.InterestsAdapter
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModel
 import com.example.groupizer.ui.auth.register.viewmodel.RegisterViewModelFactory
 import com.example.groupizer.ui.dashboard.DashboardActivity
-import com.example.groupizer.ui.saveId
 import com.example.groupizer.ui.showError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +30,7 @@ class InterestFragment : Fragment() {
 
     private lateinit var binding: FragmentInterestBinding
     private val viewModel: RegisterViewModel by activityViewModels {
-        RegisterViewModelFactory(AuthRepository.getInstance())
+        RegisterViewModelFactory(DataModule.provideAuthRepository())
     }
 
     override fun onCreateView(

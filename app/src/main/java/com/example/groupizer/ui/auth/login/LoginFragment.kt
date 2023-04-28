@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.groupizer.R
 import com.example.groupizer.databinding.FragmentLoginBinding
-import com.example.groupizer.pojo.repository.AuthRepository
+import com.example.groupizer.pojo.di.DataModule
 import com.example.groupizer.ui.*
 import com.example.groupizer.ui.auth.login.viewmodel.LoginViewModel
 import com.example.groupizer.ui.auth.login.viewmodel.LoginViewModelFactory
@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
     val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(AuthRepository.getInstance())
+        LoginViewModelFactory(DataModule.provideAuthRepository())
     }
 
     override fun onCreateView(
@@ -55,11 +55,10 @@ class LoginFragment : Fragment() {
 
     fun goToDashboard() {
         showProgress(binding.loggingProgressbar, binding.loginLoginBtn)
-
         hideKeyboard(binding.root)
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                viewModel.login()?.let { user ->
+                viewModel.login().let { user ->
                     val intent = Intent(requireActivity(), DashboardActivity::class.java)
                     saveId(user.id!!)
                     intent.putExtra(getString(R.string.current_user), user.token)
